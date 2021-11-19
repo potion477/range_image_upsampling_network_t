@@ -102,6 +102,4 @@ if __name__ == "__main__":
         opencv_upsample(args)
     elif args.env == 'pytorch':
         pytorch_upsample(args)
-
-
         
