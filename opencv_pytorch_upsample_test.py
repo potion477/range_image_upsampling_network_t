@@ -1,4 +1,3 @@
-import sys
 import argparse
 
 import cv2
@@ -93,7 +92,7 @@ def pytorch_upsample(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Upsample the selected image.')
-    parser.add_argument('--image', default='example/test_img.jpg', help='image directory to upsample')
+    parser.add_argument('--image', default='test_data/test_img.jpg', help='image directory to upsample')
     parser.add_argument('--env', default='pytorch', help='Which environment to process. (opencv / pytorch)')
 
     args = parser.parse_args()

@@ -1,5 +1,6 @@
 import numpy as np
-
+import torch
+from torchvision import transforms
 def rav2xyz(rav_ndarray):
     """ Convert rav(range/azimuth/vertical) coordinate to xyz coordinate """
 
@@ -28,6 +29,32 @@ def xyz2rav(xyz_ndarray):
     r = np.sqrt(x**2 + y**2 + z**2)
     
     return np.stack((r, a, v), axis=1)
+
+
+def convert_ndarry2tensor(x, batch_size=1):
+    """ Convert ndarray (H x W x C) to Tensor (B x C x H x W) """
+
+    row, col, channel = map(int, x.shape)
+
+    transform = transforms.Compose([transforms.ToTensor()])
+    y = transform(x)
+
+    if batch_size==None:
+        return y
+    else:
+        return torch.reshape(y, (batch_size, channel, row, col))
+
+
+def convert_tensor2ndarray(x):
+    batch_size, channel, row, col = map(int, x.shape)
+
+    x = x.reshape(channel, row, col)
+    y = x.detach().numpy()
+
+    # Convert from (C, H, W) to (H, W, C)
+    y = y.transpose((1, 2, 0))
+    
+    return y
 
 
 def load_from_bin(bin_path):
