@@ -8,17 +8,17 @@ from src.range_image_utils import convert_ptcloud2rangeimage, load_from_bin
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Save range image given point cloud directory (64,32,16, interpolation-based method)')
     parser.add_argument('--data_dir', default='../../Data/kitti/training/velodyne', help='data directory')
-    parser.add_argument('--purpose', default='/training', help='choose sub directory(/training  /validation)')
-    
+    parser.add_argument('--purpose', default='training', help='choose sub directory(training / validation)')
+     
     args = parser.parse_args()
 
-    save_64_dir = '../../Data/kitti_range_image/64' + args.purpose
-    save_32_dir = '../../Data/kitti_range_image/32' + args.purpose
-    save_16_dir = '../../Data/kitti_range_image/16' + args.purpose
-    save_64_nn_dir = '../../Data/kitti_range_image/64_nn' + args.purpose
-    save_64_bilinear_dir = '../../Data/kitti_range_image/64_bilinear' + args.purpose
-    save_64_bicubic_dir = '../../Data/kitti_range_image/64_bicubic' + args.purpose
-    save_64_lanczos_dir = '../../Data/kitti_range_image/64_lanczos' + args.purpose
+    save_64_dir = os.path.join('../../Data/kitti_range_image/64', args.purpose)
+    save_32_dir = os.path.join('../../Data/kitti_range_image/32', args.purpose)
+    save_16_dir =  os.path.join('../../Data/kitti_range_image/16', args.purpose)
+    save_64_nn_dir = os.path.join('../../Data/kitti_range_image/64_nn', args.purpose)
+    save_64_bilinear_dir = os.path.join('../../Data/kitti_range_image/64_bilinear', args.purpose)
+    save_64_bicubic_dir = os.path.join('../../Data/kitti_range_image/64_bicubic', args.purpose)
+    save_64_lanczos_dir = os.path.join('../../Data/kitti_range_image/64_lanczos', args.purpose)
 
     save_dirs = [save_64_dir, save_32_dir, save_16_dir, save_64_nn_dir, 
                  save_64_bilinear_dir, save_64_bicubic_dir, save_64_lanczos_dir]
