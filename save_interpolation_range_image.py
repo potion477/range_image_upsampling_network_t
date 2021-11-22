@@ -7,29 +7,31 @@ from src.range_image_utils import convert_ptcloud2rangeimage, load_from_bin
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Save range image given point cloud directory (64,32,16, interpolation-based method)')
-    parser.add_argument('--data_dir', default='../../Data/kitti/training/velodyne', help='data directory')
+    parser.add_argument('--data_dir', default='../../Data/kitti', help='data directory')
+    parser.add_argument('--save_dir', default='../../Data/kitti_range_image', help='save directory')
     parser.add_argument('--purpose', default='training', help='choose sub directory(training / validation)')
      
     args = parser.parse_args()
 
-    save_64_dir = os.path.join('../../Data/kitti_range_image/64', args.purpose)
-    save_32_dir = os.path.join('../../Data/kitti_range_image/32', args.purpose)
-    save_16_dir =  os.path.join('../../Data/kitti_range_image/16', args.purpose)
-    save_64_nn_dir = os.path.join('../../Data/kitti_range_image/64_nn', args.purpose)
-    save_64_bilinear_dir = os.path.join('../../Data/kitti_range_image/64_bilinear', args.purpose)
-    save_64_bicubic_dir = os.path.join('../../Data/kitti_range_image/64_bicubic', args.purpose)
-    save_64_lanczos_dir = os.path.join('../../Data/kitti_range_image/64_lanczos', args.purpose)
+    read_dir = os.path.join(args.data_dir, args.purpose, 'velodyne')
+    save_64_dir = os.path.join(args.save_dir, 'kitti_64', args.purpose)
+    save_32_dir = os.path.join(args.save_dir, 'kitti_32', args.purpose)
+    save_16_dir = os.path.join(args.save_dir, 'kitti_16', args.purpose)
+    save_64_nn_dir = os.path.join(args.save_dir, 'kitti_64_nn', args.purpose)
+    save_64_bilinear_dir = os.path.join(args.save_dir, 'kitti_64_bilinear', args.purpose)
+    save_64_bicubic_dir = os.path.join(args.save_dir, 'kitti_64_bicubic', args.purpose)
+    save_64_lanczos_dir = os.path.join(args.save_dir, 'kitti_64_lanczos', args.purpose)
 
     save_dirs = [save_64_dir, save_32_dir, save_16_dir, save_64_nn_dir, 
                  save_64_bilinear_dir, save_64_bicubic_dir, save_64_lanczos_dir]
 
-    for save_dir in save_dirs:
-        os.makedirs(save_dir, exist_ok=True)
+    for dir in save_dirs:
+        os.makedirs(dir, exist_ok=True)
     
-    data_list = sorted([os.path.join(args.data_dir,_) 
-                            for _ in os.listdir(args.data_dir) if _.endswith('.bin')])
+    data_list = sorted([os.path.join(read_dir,_) 
+                            for _ in os.listdir(read_dir) if _.endswith('.bin')])
     save_list = sorted([os.path.splitext(_)[0]
-                            for _ in os.listdir(args.data_dir) if _.endswith('.bin')])
+                            for _ in os.listdir(read_dir) if _.endswith('.bin')])
     
     """ Image Size and FOV Setting (Recommend to do not change) """
     img_size = (64, 2048)
