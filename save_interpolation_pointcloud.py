@@ -13,20 +13,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     read_dirs = [os.path.join(args.data_dir, 'kitti_64', args.purpose), 
-                 os.path.join(args.data_dir, 'kitti_32', args.purpose), 
-                 os.path.join(args.data_dir, 'kitti_16', args.purpose), 
                  os.path.join(args.data_dir, 'kitti_64_nn', args.purpose), 
                  os.path.join(args.data_dir, 'kitti_64_bilinear', args.purpose), 
                  os.path.join(args.data_dir, 'kitti_64_bicubic', args.purpose), 
                  os.path.join(args.data_dir, 'kitti_64_lanczos', args.purpose)]
 
-    save_dirs = [os.path.join(args.save_dir, 'kitti_64', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_32', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_16', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_64_nn', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_64_bilinear', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_64_bicubic', args.purpose, 'velodyne'), 
-                 os.path.join(args.save_dir, 'kitti_64_lanczos', args.purpose, 'velodyne')]
+    save_dirs = [os.path.join(args.save_dir, 'kitti_64', args.purpose), 
+                 os.path.join(args.save_dir, 'kitti_64_nn', args.purpose), 
+                 os.path.join(args.save_dir, 'kitti_64_bilinear', args.purpose), 
+                 os.path.join(args.save_dir, 'kitti_64_bicubic', args.purpose), 
+                 os.path.join(args.save_dir, 'kitti_64_lanczos', args.purpose)]
 
     img_size = (64, 2048)
     v_fov = (-24.9, 2.0)
