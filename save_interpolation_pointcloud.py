@@ -5,7 +5,7 @@ import numpy as np
 from src.range_image_utils import convert_rangeimage2ptcloud
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Save point cloud given range image (64,32,16, interpolation-based method)')
+    parser = argparse.ArgumentParser(description='Save point cloud given range image (64, interpolation-based method)')
     parser.add_argument('--data_dir', default='../../Data/kitti_range_image', help='data directory')
     parser.add_argument('--save_dir', default='../../Data/kitti_point_cloud', help='save directory')
     parser.add_argument('--purpose', default='training', help='choose sub directory(training / validation)')
