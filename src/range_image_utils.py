@@ -75,7 +75,7 @@ def filter(points, x, y, z, dist_xy, v_fov, h_fov):
     return points[np.logical_and(h_points, v_points)]
 
 
-def convert_ptcloud2rangeimage(points, v_res, h_res, v_fov=(-24.9, 2.0), h_fov=(-180, 180)):
+def convert_ptcloud2rangeimage(points, v_res, h_res, v_fov=(-24.9, 2.0), h_fov=(-180, 180), rixyz=False):
     """ Convert to range image from point cloud """
     x = points[:, 0]
     y = points[:, 1]
@@ -92,7 +92,7 @@ def convert_ptcloud2rangeimage(points, v_res, h_res, v_fov=(-24.9, 2.0), h_fov=(
     x_img = filter(x_img, x, y, z, dist_xy, v_fov, h_fov)
     y_img = filter(y_img, x, y, z, dist_xy, v_fov, h_fov)
     dist = filter(dist, x, y, z, dist_xy, v_fov, h_fov)
-    reflectivity = filter(reflectivity, x, y, z, dist_xy, v_fov, h_fov) 
+    reflectivity = filter(reflectivity, x, y, z, dist_xy, v_fov, h_fov)
 
     """ Shift negative points to positive poitns (shfit minimum value to 0) """
     x_offset = h_fov[0] / h_res
@@ -104,11 +104,24 @@ def convert_ptcloud2rangeimage(points, v_res, h_res, v_fov=(-24.9, 2.0), h_fov=(
     """ Define Range Image Matrix """
     x_size = int(np.ceil((h_fov[1]-h_fov[0]) / h_res)) + 1
     y_size = int(np.ceil((v_fov[1]-v_fov[0]) / v_res)) + 1
-    range_img = np.zeros((y_size, x_size, 2), dtype=np.float32)
-    
-    range_img[y_img, x_img, 0] = dist
-    range_img[y_img, x_img, 1] = reflectivity
 
+    if rixyz == False:
+        range_img = np.zeros((y_size, x_size, 2), dtype=np.float32)
+        range_img[y_img, x_img, 0] = dist
+        range_img[y_img, x_img, 1] = reflectivity
+    else:
+        """ Filtering points based on h_fov & v_fov """
+        x_filter = filter(x, x, y, z, dist_xy, v_fov, h_fov)
+        y_filter = filter(y, x, y, z, dist_xy, v_fov, h_fov)
+        z_filter = filter(z, x, y, z, dist_xy, v_fov, h_fov)
+
+        range_img = np.zeros((y_size, x_size, 5), dtype=np.float32)
+        range_img[y_img, x_img, 0] = dist
+        range_img[y_img, x_img, 1] = reflectivity
+        range_img[y_img, x_img, 2] = x_filter
+        range_img[y_img, x_img, 3] = y_filter
+        range_img[y_img, x_img, 4] = z_filter
+        
     return range_img
 
 
