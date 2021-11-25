@@ -45,10 +45,6 @@ if __name__ == '__main__':
             if i // 4 != 1:
                 range_image_16[i,:,:] = 0
 
-        range_image_32 = range_image_64[1::2, :, :]
-        range_image_16 = range_image_64[1::4, :, :]
-
-
         """ Convert into pointcloud """
         ptcloud_64 = convert_rangeimage2ptcloud(range_image_64, v_res, h_res)
         ptcloud_32 = convert_rangeimage2ptcloud(range_image_32, v_res, h_res)
