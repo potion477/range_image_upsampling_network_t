@@ -40,9 +40,9 @@ if __name__ == '__main__':
         range_image_16 = range_image_64.copy()
 
         for i in range(64):
-            if i // 2 != 1:
+            if i % 2 != 1:
                 range_image_32[i,:,:] = 0
-            if i // 4 != 1:
+            if i % 4 != 1:
                 range_image_16[i,:,:] = 0
 
         """ Convert into pointcloud """
